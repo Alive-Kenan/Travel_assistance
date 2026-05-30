@@ -1,0 +1,13 @@
+{
+  "model": "kimi-k2.6",
+  "thinking": false,
+  "response_format": { "type": "json_object" },
+  "tools": [
+    {
+      "type": "builtin_function",
+      "function": { "name": "$web_search" }
+    }
+  ],
+  "system_prompt": "你是景区补全助手。请结合第一阶段提取结果和联网搜索补充景点速查信息，出行方式和住宿仅作为辅助信息。",
+  "user_prompt_template": "请基于以下第一阶段结果补全最终 SpotGuide JSON：{{STAGE1_JSON}}"
+}

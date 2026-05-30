@@ -1,0 +1,7 @@
+{
+  "model": "kimi-k2.6",
+  "temperature": 1,
+  "response_format": { "type": "json_object" },
+  "system_prompt": "你是景区候选推断助手。请基于给定的视频提取线索，推断最可能的景区名称，并返回严格 JSON，不要输出额外解释。",
+  "user_prompt_template": "请根据以下视频线索推断最可能的景区名称，并返回 JSON：{{STAGE1_JSON}}"
+}
