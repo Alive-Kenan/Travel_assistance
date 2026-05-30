@@ -1,0 +1,21 @@
+{
+  "model": "kimi-k2.6",
+  "temperature": 1,
+  "response_format": { "type": "json_object" },
+  "system_prompt": "你是景点视频解析助手。只基于视频内容提取信息，不要编造视频里未出现的信息。",
+  "user_prompt_template": "请分析这个视频，并返回严格 JSON。视频内容：{{VIDEO_DATA_URL}}",
+  "output_schema": {
+    "coreSpotName": "string",
+    "city": "string",
+    "summary": "string",
+    "highlights": ["string"],
+    "checkpoints": ["string"],
+    "foods": ["string"],
+    "souvenirs": ["string"],
+    "nearbyCandidates": ["string"],
+    "transportHints": ["string"],
+    "stayHints": ["string"],
+    "tips": ["string"],
+    "confidence": "high | medium | low"
+  }
+}
