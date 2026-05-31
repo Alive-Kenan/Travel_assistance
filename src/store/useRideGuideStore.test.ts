@@ -7,6 +7,10 @@ const {
   analyzeVideoWithKimiMock,
   enrichSpotWithKimiMock,
   inferSpotCandidateWithKimiMock,
+<<<<<<< HEAD
+  analyzeTextGuideMock,
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 } = vi.hoisted(() => {
   const stage1Fixture = {
     coreSpotName: "夫子庙秦淮风光带",
@@ -33,8 +37,19 @@ const {
       city: "南京",
       summary: "夜景氛围浓",
       bestTime: "夜间",
+<<<<<<< HEAD
+      tripTags: ["一日游", "公共交通"],
       audienceTags: ["夜景"],
     },
+    dayRoute: {
+      title: "一日游览动线",
+      stops: ["文德桥", "老门东"],
+      summary: "适合首次到访时顺路游玩。",
+    },
+=======
+      audienceTags: ["夜景"],
+    },
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
     highlights: [
       {
         title: "夜景",
@@ -45,6 +60,10 @@ const {
       {
         name: "文德桥",
         description: "适合安排进主要游览动线。",
+<<<<<<< HEAD
+        highlight: "桥面夜景与河岸灯光适合打卡。",
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
         photoTip: "适合停下来拍照留念。",
       },
     ],
@@ -64,9 +83,25 @@ const {
     extraInfo: {
       transportTags: ["公共交通方便"],
       stayTags: [],
+<<<<<<< HEAD
+      transportGuide: ["地铁可达，步行接驳方便。"],
+      ticketPolicy: ["夜游项目请以现场开放时间为准。"],
+      stayGuide: [],
+      travelTips: ["周末注意人流"],
       durationHint: "夜间",
       tips: ["周末注意人流"],
     },
+    travelChecklist: {
+      spots: ["文德桥"],
+      foods: ["鸭血粉丝汤"],
+      essentials: ["舒适好走的鞋"],
+      copyText: "出行清单\n打卡地点：文德桥",
+    },
+=======
+      durationHint: "夜间",
+      tips: ["周末注意人流"],
+    },
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   } as const
 
   return {
@@ -76,6 +111,10 @@ const {
     analyzeVideoWithKimiMock: vi.fn().mockResolvedValue(stage1Fixture),
     enrichSpotWithKimiMock: vi.fn().mockRejectedValue(new Error("SEARCH_FAILED")),
     inferSpotCandidateWithKimiMock: vi.fn(),
+<<<<<<< HEAD
+    analyzeTextGuideMock: vi.fn(),
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   }
 })
 
@@ -89,6 +128,13 @@ vi.mock("@/services/backendVideoAnalyzeClient", () => ({
   analyzeVideoViaBackend: analyzeVideoViaBackendMock,
 }))
 
+<<<<<<< HEAD
+vi.mock("@/services/textGuideAnalyzer", () => ({
+  analyzeTextGuide: analyzeTextGuideMock,
+}))
+
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 import { useRideGuideStore } from "@/store/useRideGuideStore"
 
 describe("useRideGuideStore", () => {
@@ -100,6 +146,10 @@ describe("useRideGuideStore", () => {
     enrichSpotWithKimiMock.mockReset()
     enrichSpotWithKimiMock.mockRejectedValue(new Error("SEARCH_FAILED"))
     inferSpotCandidateWithKimiMock.mockReset()
+<<<<<<< HEAD
+    analyzeTextGuideMock.mockReset()
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
     useRideGuideStore.getState().clearAll()
   })
 
@@ -247,6 +297,169 @@ describe("useRideGuideStore", () => {
     expect(useRideGuideStore.getState().result?.displayMode).toBe("inferred")
   })
 
+<<<<<<< HEAD
+  it("retries kimi enrichment for sparse food and nearby sections before accepting success", async () => {
+    enrichSpotWithKimiMock
+      .mockResolvedValueOnce({
+        ...spotGuideFixture,
+        highlights: [],
+        foodAndSouvenirs: [],
+        nearbyRecommendations: [],
+        extraInfo: {
+          ...spotGuideFixture.extraInfo,
+          transportGuide: [],
+          ticketPolicy: [],
+          stayGuide: [],
+        },
+      })
+      .mockResolvedValueOnce({
+        ...spotGuideFixture,
+        foodAndSouvenirs: [
+          {
+            name: "鸭血粉丝汤",
+            category: "food",
+            reason: "本地高频推荐，适合顺路品尝。",
+          },
+        ],
+        nearbyRecommendations: [
+          {
+            name: "老门东",
+            reason: "适合和主景点一起安排。",
+          },
+        ],
+        extraInfo: {
+          ...spotGuideFixture.extraInfo,
+          stayGuide: ["可优先住在秦淮河沿线，夜游结束后步行返回更方便。"],
+        },
+      })
+
+    const file = new File([new Uint8Array([1])], "demo.mp4", { type: "video/mp4" })
+    await useRideGuideStore.getState().analyzeDemoVideo(file)
+
+    expect(enrichSpotWithKimiMock).toHaveBeenCalledTimes(2)
+    expect(enrichSpotWithKimiMock).toHaveBeenNthCalledWith(2, stage1Fixture, {
+      focusSections: [
+        "highlights",
+        "foodAndSouvenirs",
+        "nearbyRecommendations",
+        "transportGuide",
+        "ticketPolicy",
+        "stayGuide",
+      ],
+      referenceGuide: expect.objectContaining({
+        coreSpot: expect.objectContaining({
+          title: "夫子庙秦淮风光带",
+        }),
+      }),
+    })
+    expect(useRideGuideStore.getState().status).toBe("success")
+    expect(useRideGuideStore.getState().result?.foodAndSouvenirs.length).toBeGreaterThan(0)
+    expect(useRideGuideStore.getState().result?.nearbyRecommendations.length).toBeGreaterThan(0)
+  })
+
+  it("retries focused enrichment again when the first retry still leaves sparse sections", async () => {
+    enrichSpotWithKimiMock
+      .mockResolvedValueOnce({
+        ...spotGuideFixture,
+        highlights: [],
+        foodAndSouvenirs: [],
+        nearbyRecommendations: [],
+        extraInfo: {
+          ...spotGuideFixture.extraInfo,
+          transportGuide: [],
+          ticketPolicy: [],
+          stayGuide: [],
+        },
+      })
+      .mockResolvedValueOnce({
+        ...spotGuideFixture,
+        highlights: [
+          {
+            title: "灵峰夜景",
+            description: "夜景层次丰富。",
+          },
+        ],
+        foodAndSouvenirs: [],
+        nearbyRecommendations: [],
+        extraInfo: {
+          ...spotGuideFixture.extraInfo,
+          transportGuide: [],
+          ticketPolicy: [],
+          stayGuide: [],
+        },
+      })
+      .mockResolvedValueOnce({
+        ...spotGuideFixture,
+        highlights: [
+          {
+            title: "灵峰夜景",
+            description: "夜景层次丰富。",
+          },
+        ],
+        foodAndSouvenirs: [
+          {
+            name: "雁荡麦饼",
+            category: "food",
+            reason: "游客集散区一带更容易顺路吃到。",
+          },
+        ],
+        nearbyRecommendations: [
+          {
+            name: "方洞景区",
+            reason: "适合与主景区串联安排。",
+          },
+        ],
+        extraInfo: {
+          ...spotGuideFixture.extraInfo,
+          transportGuide: ["高铁至雁荡山站后可转景区接驳。"],
+          ticketPolicy: ["联票与分景区购票规则以景区当日公示为准。"],
+          stayGuide: ["响岭头民宿群更方便第二天继续进山。"],
+        },
+      })
+
+    const file = new File([new Uint8Array([1])], "demo.mp4", { type: "video/mp4" })
+    await useRideGuideStore.getState().analyzeDemoVideo(file)
+
+    expect(enrichSpotWithKimiMock).toHaveBeenCalledTimes(3)
+    expect(enrichSpotWithKimiMock).toHaveBeenNthCalledWith(2, stage1Fixture, {
+      focusSections: [
+        "highlights",
+        "foodAndSouvenirs",
+        "nearbyRecommendations",
+        "transportGuide",
+        "ticketPolicy",
+        "stayGuide",
+      ],
+      referenceGuide: expect.objectContaining({
+        coreSpot: expect.objectContaining({
+          title: "夫子庙秦淮风光带",
+        }),
+      }),
+    })
+    expect(enrichSpotWithKimiMock).toHaveBeenNthCalledWith(3, stage1Fixture, {
+      focusSections: [
+        "foodAndSouvenirs",
+        "nearbyRecommendations",
+        "transportGuide",
+        "ticketPolicy",
+        "stayGuide",
+      ],
+      referenceGuide: expect.objectContaining({
+        highlights: [
+          {
+            title: "灵峰夜景",
+            description: "夜景层次丰富。",
+          },
+        ],
+      }),
+    })
+    expect(useRideGuideStore.getState().status).toBe("success")
+    expect(useRideGuideStore.getState().result?.foodAndSouvenirs[0]?.name).toBe("雁荡麦饼")
+    expect(useRideGuideStore.getState().result?.extraInfo.transportGuide).toEqual(["高铁至雁荡山站后可转景区接驳。"])
+  })
+
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   it("surfaces the real kimi error message when video analysis fails", async () => {
     analyzeVideoViaBackendMock.mockRejectedValue(
       new Error(
@@ -274,4 +487,20 @@ describe("useRideGuideStore", () => {
     expect(useRideGuideStore.getState().error?.message).toBe("EMPTY_FILE")
     expect(analyzeVideoViaBackendMock).not.toHaveBeenCalled()
   })
+<<<<<<< HEAD
+
+  it("uses text guide analyzer for text input instead of mock parser", async () => {
+    analyzeTextGuideMock.mockResolvedValue({
+      guide: spotGuideFixture,
+      partialMessage: null,
+    })
+
+    useRideGuideStore.getState().setInputText("雁荡山 门票 住宿")
+    await useRideGuideStore.getState().parseNow()
+
+    expect(analyzeTextGuideMock).toHaveBeenCalledWith("雁荡山 门票 住宿")
+    expect(useRideGuideStore.getState().status).toBe("success")
+  })
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 })

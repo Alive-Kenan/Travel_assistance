@@ -1,7 +1,11 @@
 import stage1Template from "@/prompts/kimi-video-analysis.template.json"
 import spotInferenceTemplate from "@/prompts/kimi-spot-inference.template.json"
 import stage2Template from "@/prompts/kimi-spot-enrichment.template.json"
+<<<<<<< HEAD
+import type { SpotGuide, Stage1SpotExtraction } from "@/types/spotGuide"
+=======
 import type { Stage1SpotExtraction } from "@/types/spotGuide"
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 
 type UserContentPart =
   | { type: "text"; text: string }
@@ -16,6 +20,23 @@ type ThinkingConfig = {
   type: "disabled"
 }
 
+<<<<<<< HEAD
+type SpotEnrichmentPromptOptions = {
+  focusSections?: string[]
+  referenceGuide?: SpotGuide
+}
+
+const focusSectionLabels: Record<string, string> = {
+  highlights: "景点亮点",
+  foodAndSouvenirs: "特色小吃 / 文创",
+  nearbyRecommendations: "周边顺路推荐",
+  transportGuide: "交通指南",
+  ticketPolicy: "票务政策",
+  stayGuide: "住宿参考",
+}
+
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 function replacePlaceholder(
   template: string,
   placeholder: string,
@@ -24,6 +45,41 @@ function replacePlaceholder(
   return template.replace(placeholder, value)
 }
 
+<<<<<<< HEAD
+function buildFocusInstruction(focusSections?: string[]): string {
+  if (!focusSections || focusSections.length === 0) {
+    return ""
+  }
+
+  const labeledSections = focusSections.map(
+    (section) => `${section}（${focusSectionLabels[section] ?? section}）`,
+  )
+
+  return [
+    "",
+    "这是一次针对空白栏目的二次补全。",
+    `请只重点补齐这些仍然稀疏的栏目：${labeledSections.join("、")}。`,
+    "优先使用联网搜索，补充景区官网、官方票务页、景区公众号、文旅局或主流旅游平台可交叉验证的信息。",
+    "每个空栏目至少补 1-3 条，能写具体名词就不要写泛泛建议。",
+    "如果视频没有直接提到，也要结合景点名、城市名和联网结果做可信补全，不要返回“暂未整理”或留空数组。",
+    "请保持 SpotGuide JSON 结构不变，仅把这些空栏目补充得更具体；其他已有内容可沿用或小幅修正。",
+  ].join("\n")
+}
+
+function buildReferenceGuideInstruction(referenceGuide?: SpotGuide): string {
+  if (!referenceGuide) {
+    return ""
+  }
+
+  return [
+    "",
+    "以下是当前已经整理出的部分结果，可直接沿用其中已可信的内容，并只重点补齐空白栏目：",
+    JSON.stringify(referenceGuide),
+  ].join("\n")
+}
+
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 export async function buildVideoAnalysisRequest(frameDataUrls: string[]) {
   return {
     model: stage1Template.model,
@@ -51,7 +107,17 @@ export async function buildVideoAnalysisRequest(frameDataUrls: string[]) {
   }
 }
 
+<<<<<<< HEAD
+export async function buildSpotEnrichmentRequest(
+  stage1: Stage1SpotExtraction,
+  options?: SpotEnrichmentPromptOptions,
+) {
+  const focusInstruction = buildFocusInstruction(options?.focusSections)
+  const referenceGuideInstruction = buildReferenceGuideInstruction(options?.referenceGuide)
+
+=======
 export async function buildSpotEnrichmentRequest(stage1: Stage1SpotExtraction) {
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   return {
     model: stage2Template.model,
     thinking: { type: "disabled" } satisfies ThinkingConfig,
@@ -68,7 +134,11 @@ export async function buildSpotEnrichmentRequest(stage1: Stage1SpotExtraction) {
           stage2Template.user_prompt_template,
           "{{STAGE1_JSON}}",
           JSON.stringify(stage1),
+<<<<<<< HEAD
+          ) + focusInstruction + referenceGuideInstruction,
+=======
         ),
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
       } satisfies ChatMessage,
     ],
   }

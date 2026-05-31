@@ -21,7 +21,13 @@ export default function InputPanel({ value, onChange, onParse, onClear, onExampl
             <Link2 className="h-4 w-4 text-brand-teal" />
             <span>抖音链接 / 口令 / 文本</span>
           </div>
+<<<<<<< HEAD
+          <div className="mt-1 text-xs text-ink-500">
+            当前版本支持景点名、关键词和攻略文字；抖音链接 / 口令暂未开放。
+          </div>
+=======
           <div className="mt-1 text-xs text-ink-500">粘贴一段内容即可开始，支持纯文本攻略。</div>
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <Button type="button" variant="soft" onClick={onExample} disabled={disabled || busy} className="h-10 px-3">

@@ -39,8 +39,19 @@ describe("mapStage1ToSpotGuide", () => {
       title: "夫子庙秦淮风光带",
       city: "南京",
       summary: "夜景氛围浓",
+<<<<<<< HEAD
+      tripTags: [],
       audienceTags: ["夜景", "游船", "灯会"],
     })
+    expect(result.dayRoute).toEqual({
+      title: "一日游览动线",
+      stops: ["文德桥"],
+      summary: "建议结合视频里的打卡顺序灵活安排行程。",
+    })
+=======
+      audienceTags: ["夜景", "游船", "灯会"],
+    })
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
     expect(result.highlights).toEqual([
       {
         title: "夜景",
@@ -62,19 +73,32 @@ describe("mapStage1ToSpotGuide", () => {
     expect(result.checkpoints).toEqual([
       {
         name: "文德桥",
+<<<<<<< HEAD
+        description: "可作为游览过程中重点停留的打卡点。",
+        highlight: "适合结合周边景观点一起安排停留。",
+=======
         description: "文德桥适合安排进游览动线。",
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
       },
     ])
     expect(result.foodAndSouvenirs).toEqual([
       {
         name: "鸭血粉丝汤",
         category: "food",
+<<<<<<< HEAD
+        reason: "可优先安排在景点周边顺路品尝。",
+=======
         reason: "来自视频提取结果。",
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
       },
       {
         name: "灯彩冰箱贴",
         category: "souvenir",
+<<<<<<< HEAD
+        reason: "适合作为带有当地特色的轻量伴手礼。",
+=======
         reason: "来自视频提取结果。",
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
       },
     ])
     expect(result.nearbyRecommendations).toEqual([
@@ -86,8 +110,28 @@ describe("mapStage1ToSpotGuide", () => {
     expect(result.extraInfo).toEqual({
       transportTags: ["公共交通方便"],
       stayTags: ["建议住在秦淮河附近"],
+<<<<<<< HEAD
+      transportGuide: ["公共交通方便"],
+      ticketPolicy: [],
+      stayGuide: ["建议住在秦淮河附近"],
+      travelTips: ["周末注意人流"],
       tips: ["周末注意人流"],
     })
+    expect(result.travelChecklist).toEqual({
+      spots: ["文德桥"],
+      foods: ["鸭血粉丝汤"],
+      essentials: ["舒适好走的鞋", "手机与充电宝"],
+      copyText: [
+        "出行清单",
+        "打卡地点：文德桥",
+        "必吃美食：鸭血粉丝汤",
+        "必备物品：舒适好走的鞋、手机与充电宝",
+      ].join("\n"),
+    })
+=======
+      tips: ["周末注意人流"],
+    })
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   })
 
   it("falls back to empty arrays when stage1 omits list fields", () => {
@@ -102,17 +146,36 @@ describe("mapStage1ToSpotGuide", () => {
       title: "雁荡山",
       city: "温州",
       summary: "山景壮阔",
+<<<<<<< HEAD
+      tripTags: [],
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
       audienceTags: [],
     })
     expect(result.highlights).toEqual([])
     expect(result.checkpoints).toEqual([])
     expect(result.foodAndSouvenirs).toEqual([])
     expect(result.nearbyRecommendations).toEqual([])
+<<<<<<< HEAD
+    expect(result.dayRoute).toBeUndefined()
+    expect(result.extraInfo).toEqual({
+      transportTags: [],
+      stayTags: [],
+      transportGuide: [],
+      ticketPolicy: [],
+      stayGuide: [],
+      travelTips: [],
+      tips: [],
+    })
+    expect(result.travelChecklist?.spots).toEqual([])
+    expect(result.travelChecklist?.foods).toEqual([])
+=======
     expect(result.extraInfo).toEqual({
       transportTags: [],
       stayTags: [],
       tips: [],
     })
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   })
 
   it("falls back to safe core spot text when stage1 omits title and summary", () => {
@@ -127,6 +190,10 @@ describe("mapStage1ToSpotGuide", () => {
       title: "待确认景点",
       city: "温州",
       summary: "当前仅提取到部分视频信息，可结合联网补充进一步确认。",
+<<<<<<< HEAD
+      tripTags: [],
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
       audienceTags: [],
     })
   })

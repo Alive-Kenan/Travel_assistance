@@ -104,6 +104,25 @@ describe("scenic spot copy", () => {
     expect(inputMarkup).not.toContain("骑行攻略文字")
   })
 
+<<<<<<< HEAD
+  it("shows text-only hint for the first release", () => {
+    const inputMarkup = renderToStaticMarkup(
+      <InputPanel
+        value=""
+        onChange={vi.fn()}
+        onParse={vi.fn()}
+        onClear={vi.fn()}
+        onExample={vi.fn()}
+      />,
+    )
+
+    expect(inputMarkup).toContain(
+      "当前版本支持景点名、关键词和攻略文字；抖音链接 / 口令暂未开放。",
+    )
+  })
+
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   it("shows a demo video panel for internal testing", () => {
     const homeMarkup = renderToStaticMarkup(<Home />)
 

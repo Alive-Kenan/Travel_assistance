@@ -45,7 +45,12 @@ function buildHighlights(items: string[]) {
 function buildCheckpoints(items: string[]) {
   return items.map((item) => ({
     name: item,
+<<<<<<< HEAD
+    description: `${item}适合作为重点停留和拍照打卡的位置。`,
+    highlight: `${item}有较强的现场辨识度，适合优先安排。`,
+=======
     description: `${item}适合安排进主要游览动线。`,
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
     photoTip: `${item}适合停下来拍照留念。`,
   }))
 }
@@ -90,11 +95,37 @@ function buildExtraInfo(raw: string) {
   return {
     transportTags: transportTags.length > 0 ? transportTags : ["公共交通方便"],
     stayTags,
+<<<<<<< HEAD
+    transportGuide: transportTags.length > 0 ? transportTags : ["公共交通方便"],
+    ticketPolicy: [],
+    stayGuide: stayTags,
+    travelTips: tips.length > 0 ? tips : ["周末注意人流"],
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
     durationHint: items.find((item) => /(半天|一天|傍晚|夜间)/.test(item)),
     tips: tips.length > 0 ? tips : ["周末注意人流"],
   }
 }
 
+<<<<<<< HEAD
+function buildTravelChecklist(checkpoints: string[], foods: string[]) {
+  const essentials = ["舒适好走的鞋", "手机与充电宝"]
+
+  return {
+    spots: checkpoints,
+    foods,
+    essentials,
+    copyText: [
+      "出行清单",
+      `打卡地点：${checkpoints.length > 0 ? checkpoints.join("、") : "待补充"}`,
+      `必吃美食：${foods.length > 0 ? foods.join("、") : "待补充"}`,
+      `必备物品：${essentials.join("、")}`,
+    ].join("\n"),
+  }
+}
+
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 function buildGuide(text: string, kind: "url" | "text"): SpotGuide {
   const city = pickCity(text)
   const spotTitle = getLineValue(text, "主景点") || (city ? `${city}人气景点` : "热门景点")
@@ -107,6 +138,13 @@ function buildGuide(text: string, kind: "url" | "text"): SpotGuide {
   const extraInfo = buildExtraInfo(extraInfoRaw)
   const bestTime = extraInfo.durationHint
   const audienceTags = highlightItems.slice(0, 3)
+<<<<<<< HEAD
+  const tripTags = [
+    bestTime ? "一日游" : "",
+    extraInfo.transportTags.some((item) => /(交通|地铁|公交)/.test(item)) ? "公共交通" : "",
+  ].filter(Boolean)
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 
   return {
     source: {
@@ -118,8 +156,19 @@ function buildGuide(text: string, kind: "url" | "text"): SpotGuide {
       city,
       summary: `${spotTitle}很值得加入行程，适合用一屏快速掌握亮点、打卡点和顺路吃逛建议。`,
       bestTime,
+<<<<<<< HEAD
+      tripTags,
       audienceTags: audienceTags.length > 0 ? audienceTags : ["拍照打卡", "城市漫游"],
     },
+    dayRoute: {
+      title: "一日游览动线",
+      stops: checkpointItems.length > 0 ? checkpointItems : [spotTitle],
+      summary: "适合首次到访时按主线快速游玩。",
+    },
+=======
+      audienceTags: audienceTags.length > 0 ? audienceTags : ["拍照打卡", "城市漫游"],
+    },
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
     highlights: buildHighlights(highlightItems.length > 0 ? highlightItems : ["景色出片", "氛围感强"]),
     checkpoints: buildCheckpoints(checkpointItems.length > 0 ? checkpointItems : [spotTitle]),
     foodAndSouvenirs: buildFoodAndSouvenirs(
@@ -130,6 +179,13 @@ function buildGuide(text: string, kind: "url" | "text"): SpotGuide {
       ? buildNearbyRecommendations(nearbyRaw)
       : [{ name: "周边街区", reason: "适合继续散步和补充小吃。" }],
     extraInfo,
+<<<<<<< HEAD
+    travelChecklist: buildTravelChecklist(
+      checkpointItems.length > 0 ? checkpointItems : [spotTitle],
+      foodItems.length > 0 ? foodItems : ["本地特色小吃"],
+    ),
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   }
 }
 

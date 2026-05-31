@@ -293,8 +293,22 @@ describe("enrichSpotWithKimi", () => {
                     title: "雁荡山",
                     city: "温州",
                     summary: "山景壮阔",
+<<<<<<< HEAD
+                    tripTags: ["一日游", "徒步"],
+                    budget: {
+                      label: "参考人均",
+                      range: "240~300 元",
+                    },
                     audienceTags: ["山岳"],
                   },
+                  dayRoute: {
+                    title: "一日游览动线",
+                    stops: ["游客中心", "灵峰", "灵岩"],
+                  },
+=======
+                    audienceTags: ["山岳"],
+                  },
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
                   highlights: [],
                   checkpoints: [],
                   foodAndSouvenirs: [],
@@ -302,8 +316,23 @@ describe("enrichSpotWithKimi", () => {
                   extraInfo: {
                     transportTags: [],
                     stayTags: [],
+<<<<<<< HEAD
+                    transportGuide: [],
+                    ticketPolicy: [],
+                    stayGuide: [],
+                    travelTips: [],
                     tips: [],
                   },
+                  travelChecklist: {
+                    spots: ["灵峰"],
+                    foods: ["麦饼"],
+                    essentials: ["徒步鞋"],
+                    copyText: "出行清单",
+                  },
+=======
+                    tips: [],
+                  },
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
                 }),
               },
             },
@@ -391,15 +420,327 @@ describe("enrichSpotWithKimi", () => {
     expect(result.checkpoints).toEqual([
       {
         name: "灵岩",
+<<<<<<< HEAD
+        description: "当前结果未提供更详细的打卡点描述。",
+=======
         description: "灵岩值得作为游览动线中的停留点。",
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
       },
     ])
     expect(result.foodAndSouvenirs[0]).toEqual({
       name: "麦饼",
       category: "food",
+<<<<<<< HEAD
+      reason: "可优先安排在景点周边顺路品尝。",
+    })
+    expect(result.extraInfo.transportTags).toEqual(["建议自驾"])
+    expect(result.extraInfo.transportGuide).toEqual(["建议自驾"])
+    expect(result.travelChecklist?.essentials).toEqual(["舒适好走的鞋", "手机与充电宝"])
+  })
+
+  test("normalizes day route stops when kimi returns structured objects", async () => {
+    vi.stubGlobal("window", { __KIMI_API_KEY__: "window-key" })
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      ok: true,
+      json: vi.fn().mockResolvedValue({
+        choices: [
+          {
+            finish_reason: "stop",
+            message: {
+              content: JSON.stringify({
+                coreSpot: {
+                  title: "雁荡山",
+                  city: "温州",
+                  summary: "山景壮阔",
+                  tripTags: ["一日游"],
+                  audienceTags: ["山岳"],
+                },
+                dayRoute: {
+                  title: "雁荡山精华一日游动线（雨后初晴版）",
+                  stops: [
+                    { name: "游客中心" },
+                    { title: "大龙湫" },
+                    { label: "灵岩" },
+                    "方洞",
+                  ],
+                  summary: "按核心景区顺序游玩。",
+                },
+                highlights: [],
+                checkpoints: [],
+                foodAndSouvenirs: [],
+                nearbyRecommendations: [],
+                extraInfo: {
+                  transportTags: [],
+                  stayTags: [],
+                  transportGuide: [],
+                  ticketPolicy: [],
+                  stayGuide: [],
+                  travelTips: [],
+                  tips: [],
+                },
+              }),
+            },
+          },
+        ],
+      }),
+    }))
+
+    const result = await enrichSpotWithKimi({
+      coreSpotName: "雁荡山",
+      city: "温州",
+      summary: "山景壮阔",
+      highlights: [],
+      checkpoints: [],
+      foods: [],
+      souvenirs: [],
+      nearbyCandidates: [],
+      transportHints: [],
+      stayHints: [],
+      tips: [],
+      confidence: "high",
+    })
+
+    expect(result.dayRoute?.stops).toEqual(["游客中心", "大龙湫", "灵岩", "方洞"])
+  })
+
+  test("normalizes nested food and extra-info objects to avoid runtime rendering crashes", async () => {
+    vi.stubGlobal("window", { __KIMI_API_KEY__: "window-key" })
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      ok: true,
+      json: vi.fn().mockResolvedValue({
+        choices: [
+          {
+            finish_reason: "stop",
+            message: {
+              content: JSON.stringify({
+                coreSpot: {
+                  title: "雁荡山",
+                  city: "温州",
+                  summary: "山景壮阔",
+                  tripTags: [{ label: "一日游" }, { name: "徒步" }],
+                  audienceTags: [{ title: "山水风光" }],
+                },
+                foodAndSouvenirs: [
+                  {
+                    category: "food",
+                    name: {
+                      name: "雁荡麦饼",
+                      description: "本地高频出现的小吃",
+                      recommendSpot: "响岭头",
+                    },
+                    reason: {
+                      description: "建议刚到景区时顺路尝试。",
+                    },
+                  },
+                ],
+                extraInfo: {
+                  transportTags: [{ label: "高铁直达" }],
+                  stayTags: [{ name: "景区内住宿" }],
+                  transportGuide: [{ description: "可先到雁荡山站再转接驳车。" }],
+                  ticketPolicy: [{ title: "联票可优先考虑" }],
+                  stayGuide: [{ recommendSpot: "响岭头民宿群" }],
+                  travelTips: [{ content: "雨后路滑，建议穿防滑鞋。" }],
+                  tips: [],
+                },
+                highlights: [],
+                checkpoints: [],
+                nearbyRecommendations: [],
+              }),
+            },
+          },
+        ],
+      }),
+    }))
+
+    const result = await enrichSpotWithKimi({
+      coreSpotName: "雁荡山",
+      city: "温州",
+      summary: "山景壮阔",
+      highlights: [],
+      checkpoints: [],
+      foods: [],
+      souvenirs: [],
+      nearbyCandidates: [],
+      transportHints: [],
+      stayHints: [],
+      tips: [],
+      confidence: "high",
+    })
+
+    expect(result.coreSpot.tripTags).toEqual(["一日游", "徒步"])
+    expect(result.coreSpot.audienceTags).toEqual(["山水风光"])
+    expect(result.foodAndSouvenirs).toEqual([
+      {
+        name: "雁荡麦饼",
+        category: "food",
+        reason: "建议刚到景区时顺路尝试。",
+      },
+    ])
+    expect(result.extraInfo.transportGuide).toEqual(["可先到雁荡山站再转接驳车。"])
+    expect(result.extraInfo.ticketPolicy).toEqual(["联票可优先考虑"])
+    expect(result.extraInfo.stayGuide).toEqual(["响岭头民宿群"])
+    expect(result.extraInfo.travelTips).toEqual(["雨后路滑，建议穿防滑鞋。"])
+  })
+
+  test("derives grouped extra info from tags and travel tips when dedicated sections are blank", async () => {
+    vi.stubGlobal("window", { __KIMI_API_KEY__: "window-key" })
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      ok: true,
+      json: vi.fn().mockResolvedValue({
+        choices: [
+          {
+            finish_reason: "stop",
+            message: {
+              content: JSON.stringify({
+                coreSpot: {
+                  title: "雁荡山",
+                  city: "温州",
+                  summary: "山景壮阔",
+                  tripTags: ["一日游"],
+                  audienceTags: ["山岳"],
+                },
+                highlights: [],
+                checkpoints: [],
+                foodAndSouvenirs: [],
+                nearbyRecommendations: [],
+                extraInfo: {
+                  transportTags: ["动车直达", "免费接驳", "景区大巴必购"],
+                  stayTags: ["雁荡山镇民宿", "响岭头景区内"],
+                  transportGuide: [],
+                  ticketPolicy: [],
+                  stayGuide: [],
+                  travelTips: [
+                    "灵峰日夜景分开售票",
+                    "大巴车票3日有效适合多日游",
+                    "线上提前购票省排队时间",
+                  ],
+                  tips: [],
+                },
+              }),
+            },
+          },
+        ],
+      }),
+    }))
+
+    const result = await enrichSpotWithKimi({
+      coreSpotName: "雁荡山",
+      city: "温州",
+      summary: "山景壮阔",
+      highlights: [],
+      checkpoints: [],
+      foods: [],
+      souvenirs: [],
+      nearbyCandidates: [],
+      transportHints: [],
+      stayHints: [],
+      tips: [],
+      confidence: "high",
+    })
+
+    expect(result.extraInfo.transportGuide).toEqual([
+      "动车直达",
+      "免费接驳",
+      "景区大巴必购",
+    ])
+    expect(result.extraInfo.ticketPolicy).toEqual([
+      "灵峰日夜景分开售票",
+      "大巴车票3日有效适合多日游",
+      "线上提前购票省排队时间",
+    ])
+    expect(result.extraInfo.stayGuide).toEqual([
+      "雁荡山镇民宿",
+      "响岭头景区内",
+    ])
+  })
+
+  test("limits checkpoints and food suggestions to at most five items", async () => {
+    vi.stubGlobal("window", { __KIMI_API_KEY__: "window-key" })
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      ok: true,
+      json: vi.fn().mockResolvedValue({
+        choices: [
+          {
+            finish_reason: "stop",
+            message: {
+              content: JSON.stringify({
+                coreSpot: {
+                  title: "雁荡山",
+                  city: "温州",
+                  summary: "山景壮阔",
+                  tripTags: ["一日游"],
+                  audienceTags: ["山岳"],
+                },
+                highlights: [],
+                checkpoints: [
+                  { name: "灵峰" },
+                  { name: "灵岩" },
+                  { name: "大龙湫" },
+                  { name: "方洞" },
+                  { name: "显胜门" },
+                  { name: "三折瀑" },
+                ],
+                foodAndSouvenirs: [
+                  { name: "温州瘦肉丸", category: "food", reason: "本地推荐" },
+                  { name: "雁荡香鱼", category: "food", reason: "本地推荐" },
+                  { name: "温州糯米饭", category: "food", reason: "本地推荐" },
+                  { name: "炸年糕", category: "food", reason: "本地推荐" },
+                  { name: "雁荡毛峰茶", category: "souvenir", reason: "本地推荐" },
+                  { name: "黄杨木雕", category: "souvenir", reason: "本地推荐" },
+                ],
+                nearbyRecommendations: [],
+                extraInfo: {
+                  transportTags: [],
+                  stayTags: [],
+                  transportGuide: [],
+                  ticketPolicy: [],
+                  stayGuide: [],
+                  travelTips: [],
+                  tips: [],
+                },
+              }),
+            },
+          },
+        ],
+      }),
+    }))
+
+    const result = await enrichSpotWithKimi({
+      coreSpotName: "雁荡山",
+      city: "温州",
+      summary: "山景壮阔",
+      highlights: [],
+      checkpoints: [],
+      foods: [],
+      souvenirs: [],
+      nearbyCandidates: [],
+      transportHints: [],
+      stayHints: [],
+      tips: [],
+      confidence: "high",
+    })
+
+    expect(result.checkpoints).toHaveLength(5)
+    expect(result.checkpoints.map((item) => item.name)).toEqual([
+      "灵峰",
+      "灵岩",
+      "大龙湫",
+      "方洞",
+      "显胜门",
+    ])
+    expect(result.foodAndSouvenirs).toHaveLength(5)
+    expect(result.foodAndSouvenirs.map((item) => item.name)).toEqual([
+      "温州瘦肉丸",
+      "雁荡香鱼",
+      "温州糯米饭",
+      "炸年糕",
+      "雁荡毛峰茶",
+    ])
+=======
       reason: "来自当前景点结果的补充信息。",
     })
     expect(result.extraInfo.transportTags).toEqual(["建议自驾"])
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   })
 
   test("infers a candidate spot name from weak stage1 clues", async () => {
@@ -454,6 +795,10 @@ describe("enrichSpotWithKimi", () => {
                   title: "雁荡山",
                   city: "温州",
                   summary: "山景壮阔",
+<<<<<<< HEAD
+                  tripTags: [],
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
                   audienceTags: ["山岳"],
                 },
                 highlights: [],
@@ -463,6 +808,13 @@ describe("enrichSpotWithKimi", () => {
                 extraInfo: {
                   transportTags: [],
                   stayTags: [],
+<<<<<<< HEAD
+                  transportGuide: [],
+                  ticketPolicy: [],
+                  stayGuide: [],
+                  travelTips: [],
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
                   tips: [],
                 },
               }),
@@ -496,4 +848,89 @@ describe("enrichSpotWithKimi", () => {
     expect(result.displayMode).toBe("inferred")
     expect(result.displayHints).toContain("该景区名称根据视频线索推断，建议进一步核验。")
   })
+<<<<<<< HEAD
+
+  test("parses fenced json payloads returned after builtin web search", async () => {
+    vi.stubGlobal("window", { __KIMI_API_KEY__: "window-key" })
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      ok: true,
+      json: vi.fn().mockResolvedValue({
+        choices: [
+          {
+            finish_reason: "stop",
+            message: {
+              content: [
+                "```json",
+                JSON.stringify({
+                  coreSpot: {
+                    title: "雁荡山",
+                    city: "温州",
+                    summary: "以奇峰飞瀑和灵峰夜景见长，适合一日精华游。",
+                    tripTags: ["一日游", "山岳风光"],
+                    audienceTags: ["徒步", "摄影"],
+                  },
+                  highlights: [
+                    {
+                      title: "灵峰夜景",
+                      description: "夜间峰体轮廓变化明显，是雁荡山辨识度最高的体验之一。",
+                    },
+                  ],
+                  checkpoints: [
+                    {
+                      name: "大龙湫",
+                      description: "瀑布落差大，雨后水量更足。",
+                    },
+                  ],
+                  foodAndSouvenirs: [
+                    {
+                      name: "雁荡麦饼",
+                      category: "food",
+                      reason: "响岭头一带较容易顺路吃到。",
+                    },
+                  ],
+                  nearbyRecommendations: [
+                    {
+                      name: "方洞景区",
+                      reason: "适合和灵岩、大龙湫串联成一日动线。",
+                    },
+                  ],
+                  extraInfo: {
+                    transportTags: [],
+                    stayTags: [],
+                    transportGuide: ["高铁到雁荡山站后可转景区接驳。"],
+                    ticketPolicy: ["核心景区联票更适合一日游用户。"],
+                    stayGuide: ["响岭头周边民宿更方便次日继续游玩。"],
+                    travelTips: ["雨后石阶湿滑，建议穿防滑鞋。"],
+                    tips: [],
+                  },
+                }),
+                "```",
+              ].join("\n"),
+            },
+          },
+        ],
+      }),
+    }))
+
+    const result = await enrichSpotWithKimi({
+      coreSpotName: "雁荡山",
+      city: "温州",
+      summary: "",
+      highlights: [],
+      checkpoints: [],
+      foods: [],
+      souvenirs: [],
+      nearbyCandidates: [],
+      transportHints: [],
+      stayHints: [],
+      tips: [],
+      confidence: "high",
+    })
+
+    expect(result.coreSpot.title).toBe("雁荡山")
+    expect(result.highlights[0]?.title).toBe("灵峰夜景")
+    expect(result.extraInfo.transportGuide).toEqual(["高铁到雁荡山站后可转景区接驳。"])
+  })
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 })
