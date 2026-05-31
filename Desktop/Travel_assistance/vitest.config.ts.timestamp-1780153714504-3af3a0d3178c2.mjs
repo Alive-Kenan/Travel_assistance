@@ -1,0 +1,13 @@
+// vitest.config.ts
+import { defineConfig } from "file:///C:/Users/%E5%A4%8F%E6%B5%B7%E9%91%AB/Desktop/%E6%97%85%E8%A1%8C%E9%A1%B9%E7%9B%AE/node_modules/vitest/dist/config.js";
+import tsconfigPaths from "file:///C:/Users/%E5%A4%8F%E6%B5%B7%E9%91%AB/Desktop/%E6%97%85%E8%A1%8C%E9%A1%B9%E7%9B%AE/node_modules/vite-tsconfig-paths/dist/index.js";
+var vitest_config_default = defineConfig({
+  plugins: [tsconfigPaths()],
+  test: {
+    environment: "node"
+  }
+});
+export {
+  vitest_config_default as default
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsidml0ZXN0LmNvbmZpZy50cyJdLAogICJzb3VyY2VzQ29udGVudCI6IFsiY29uc3QgX192aXRlX2luamVjdGVkX29yaWdpbmFsX2Rpcm5hbWUgPSBcIkM6XFxcXFVzZXJzXFxcXFx1NTkwRlx1NkQ3N1x1OTQ2QlxcXFxEZXNrdG9wXFxcXFx1NjVDNVx1ODg0Q1x1OTg3OVx1NzZFRVwiO2NvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9maWxlbmFtZSA9IFwiQzpcXFxcVXNlcnNcXFxcXHU1OTBGXHU2RDc3XHU5NDZCXFxcXERlc2t0b3BcXFxcXHU2NUM1XHU4ODRDXHU5ODc5XHU3NkVFXFxcXHZpdGVzdC5jb25maWcudHNcIjtjb25zdCBfX3ZpdGVfaW5qZWN0ZWRfb3JpZ2luYWxfaW1wb3J0X21ldGFfdXJsID0gXCJmaWxlOi8vL0M6L1VzZXJzLyVFNSVBNCU4RiVFNiVCNSVCNyVFOSU5MSVBQi9EZXNrdG9wLyVFNiU5NyU4NSVFOCVBMSU4QyVFOSVBMSVCOSVFNyU5QiVBRS92aXRlc3QuY29uZmlnLnRzXCI7aW1wb3J0IHsgZGVmaW5lQ29uZmlnIH0gZnJvbSBcInZpdGVzdC9jb25maWdcIlxuaW1wb3J0IHRzY29uZmlnUGF0aHMgZnJvbSBcInZpdGUtdHNjb25maWctcGF0aHNcIlxuXG5leHBvcnQgZGVmYXVsdCBkZWZpbmVDb25maWcoe1xuICBwbHVnaW5zOiBbdHNjb25maWdQYXRocygpXSxcbiAgdGVzdDoge1xuICAgIGVudmlyb25tZW50OiBcIm5vZGVcIixcbiAgfSxcbn0pXG5cbiJdLAogICJtYXBwaW5ncyI6ICI7QUFBbVUsU0FBUyxvQkFBb0I7QUFDaFcsT0FBTyxtQkFBbUI7QUFFMUIsSUFBTyx3QkFBUSxhQUFhO0FBQUEsRUFDMUIsU0FBUyxDQUFDLGNBQWMsQ0FBQztBQUFBLEVBQ3pCLE1BQU07QUFBQSxJQUNKLGFBQWE7QUFBQSxFQUNmO0FBQ0YsQ0FBQzsiLAogICJuYW1lcyI6IFtdCn0K
