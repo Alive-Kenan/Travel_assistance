@@ -105,6 +105,7 @@ describe("buildSpotEnrichmentRequest", () => {
     expect(request.thinking).toEqual({ type: "disabled" })
     expect(request.messages[1]?.content).toContain("\"coreSpotName\":\"夫子庙秦淮风光带\"")
   })
+<<<<<<< HEAD
 
   it("builds a focused retry prompt for sparse travel sections", async () => {
     const request = await buildSpotEnrichmentRequest(
@@ -176,6 +177,8 @@ describe("buildSpotEnrichmentRequest", () => {
     expect(request.messages[1]?.content).toContain("\"checkpoints\":[{\"name\":\"灵岩景区\"")
     expect(request.messages[1]?.content).not.toContain("不要留空：transportGuide、ticketPolicy、foodAndSouvenirs、highlights")
   })
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 })
 
 describe("isSpotGuideContentSufficient", () => {
@@ -186,7 +189,10 @@ describe("isSpotGuideContentSufficient", () => {
           title: "",
           city: "温州",
           summary: "",
+<<<<<<< HEAD
           tripTags: [],
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
           audienceTags: [],
         },
         highlights: [],
@@ -196,10 +202,13 @@ describe("isSpotGuideContentSufficient", () => {
         extraInfo: {
           transportTags: [],
           stayTags: [],
+<<<<<<< HEAD
           transportGuide: [],
           ticketPolicy: [],
           stayGuide: [],
           travelTips: [],
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
           tips: [],
         },
         source: {
@@ -217,7 +226,10 @@ describe("isSpotGuideContentSufficient", () => {
           title: "雁荡山",
           city: "温州",
           summary: "山景壮阔",
+<<<<<<< HEAD
           tripTags: [],
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
           audienceTags: [],
         },
         highlights: [{ title: "灵峰夜景", description: "夜景知名" }],
@@ -227,10 +239,13 @@ describe("isSpotGuideContentSufficient", () => {
         extraInfo: {
           transportTags: [],
           stayTags: [],
+<<<<<<< HEAD
           transportGuide: [],
           ticketPolicy: [],
           stayGuide: [],
           travelTips: [],
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
           tips: [],
         },
         source: {

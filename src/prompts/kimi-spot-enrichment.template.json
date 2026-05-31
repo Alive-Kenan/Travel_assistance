@@ -8,6 +8,11 @@
       "function": { "name": "$web_search" }
     }
   ],
+<<<<<<< HEAD
   "system_prompt": "你是景区补全助手。请结合第一阶段提取结果和联网搜索补充景点速查信息，返回严格 JSON。结果需突出景点主卡、必打卡点、一日游览动线、特色小吃/文创、周边顺路推荐与补充信息。coreSpot 下必须输出 title、city、summary、bestSeason、tripTags、budget、audienceTags；budget 需包含 label、range、description。dayRoute 需包含 title、stops、summary。checkpoints 每项需包含 name、description、highlight、duration，可选 photoTip、stayHint。extraInfo 需包含 transportGuide、ticketPolicy、stayGuide、travelTips，并保留 transportTags、stayTags、durationHint、tips 兼容字段。travelChecklist 需包含 spots、foods、essentials、copyText。",
   "user_prompt_template": "请基于以下第一阶段结果补全最终 SpotGuide JSON。要求：1. 景点主卡补出游玩标签、最佳时节和参考人均花费；2. 必打卡点避免模板化重复，每个点单独写看点和建议耗时；3. 单独给出一日游览动线；4. 补充信息按交通指南、票务政策、住宿参考、出行贴士分组；5. 生成可直接复制的出行清单。第一阶段结果：{{STAGE1_JSON}}"
+=======
+  "system_prompt": "你是景区补全助手。请结合第一阶段提取结果和联网搜索补充景点速查信息，出行方式和住宿仅作为辅助信息。",
+  "user_prompt_template": "请基于以下第一阶段结果补全最终 SpotGuide JSON：{{STAGE1_JSON}}"
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 }

@@ -7,7 +7,10 @@ const {
   analyzeVideoWithKimiMock,
   enrichSpotWithKimiMock,
   inferSpotCandidateWithKimiMock,
+<<<<<<< HEAD
   analyzeTextGuideMock,
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 } = vi.hoisted(() => {
   const stage1Fixture = {
     coreSpotName: "夫子庙秦淮风光带",
@@ -34,6 +37,7 @@ const {
       city: "南京",
       summary: "夜景氛围浓",
       bestTime: "夜间",
+<<<<<<< HEAD
       tripTags: ["一日游", "公共交通"],
       audienceTags: ["夜景"],
     },
@@ -42,6 +46,10 @@ const {
       stops: ["文德桥", "老门东"],
       summary: "适合首次到访时顺路游玩。",
     },
+=======
+      audienceTags: ["夜景"],
+    },
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
     highlights: [
       {
         title: "夜景",
@@ -52,7 +60,10 @@ const {
       {
         name: "文德桥",
         description: "适合安排进主要游览动线。",
+<<<<<<< HEAD
         highlight: "桥面夜景与河岸灯光适合打卡。",
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
         photoTip: "适合停下来拍照留念。",
       },
     ],
@@ -72,6 +83,7 @@ const {
     extraInfo: {
       transportTags: ["公共交通方便"],
       stayTags: [],
+<<<<<<< HEAD
       transportGuide: ["地铁可达，步行接驳方便。"],
       ticketPolicy: ["夜游项目请以现场开放时间为准。"],
       stayGuide: [],
@@ -85,6 +97,11 @@ const {
       essentials: ["舒适好走的鞋"],
       copyText: "出行清单\n打卡地点：文德桥",
     },
+=======
+      durationHint: "夜间",
+      tips: ["周末注意人流"],
+    },
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   } as const
 
   return {
@@ -94,7 +111,10 @@ const {
     analyzeVideoWithKimiMock: vi.fn().mockResolvedValue(stage1Fixture),
     enrichSpotWithKimiMock: vi.fn().mockRejectedValue(new Error("SEARCH_FAILED")),
     inferSpotCandidateWithKimiMock: vi.fn(),
+<<<<<<< HEAD
     analyzeTextGuideMock: vi.fn(),
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   }
 })
 
@@ -108,10 +128,13 @@ vi.mock("@/services/backendVideoAnalyzeClient", () => ({
   analyzeVideoViaBackend: analyzeVideoViaBackendMock,
 }))
 
+<<<<<<< HEAD
 vi.mock("@/services/textGuideAnalyzer", () => ({
   analyzeTextGuide: analyzeTextGuideMock,
 }))
 
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 import { useRideGuideStore } from "@/store/useRideGuideStore"
 
 describe("useRideGuideStore", () => {
@@ -123,7 +146,10 @@ describe("useRideGuideStore", () => {
     enrichSpotWithKimiMock.mockReset()
     enrichSpotWithKimiMock.mockRejectedValue(new Error("SEARCH_FAILED"))
     inferSpotCandidateWithKimiMock.mockReset()
+<<<<<<< HEAD
     analyzeTextGuideMock.mockReset()
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
     useRideGuideStore.getState().clearAll()
   })
 
@@ -271,6 +297,7 @@ describe("useRideGuideStore", () => {
     expect(useRideGuideStore.getState().result?.displayMode).toBe("inferred")
   })
 
+<<<<<<< HEAD
   it("retries kimi enrichment for sparse food and nearby sections before accepting success", async () => {
     enrichSpotWithKimiMock
       .mockResolvedValueOnce({
@@ -431,6 +458,8 @@ describe("useRideGuideStore", () => {
     expect(useRideGuideStore.getState().result?.extraInfo.transportGuide).toEqual(["高铁至雁荡山站后可转景区接驳。"])
   })
 
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   it("surfaces the real kimi error message when video analysis fails", async () => {
     analyzeVideoViaBackendMock.mockRejectedValue(
       new Error(
@@ -458,6 +487,7 @@ describe("useRideGuideStore", () => {
     expect(useRideGuideStore.getState().error?.message).toBe("EMPTY_FILE")
     expect(analyzeVideoViaBackendMock).not.toHaveBeenCalled()
   })
+<<<<<<< HEAD
 
   it("uses text guide analyzer for text input instead of mock parser", async () => {
     analyzeTextGuideMock.mockResolvedValue({
@@ -471,4 +501,6 @@ describe("useRideGuideStore", () => {
     expect(analyzeTextGuideMock).toHaveBeenCalledWith("雁荡山 门票 住宿")
     expect(useRideGuideStore.getState().status).toBe("success")
   })
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 })

@@ -2,6 +2,7 @@ export type ParseErrorCode = "INVALID_INPUT" | "TIMEOUT" | "PARSE_FAILED" | "ABO
 
 export type SpotGuideDisplayMode = "full" | "partial" | "inferred"
 
+<<<<<<< HEAD
 export type SpotBudget = {
   label: string
   range: string
@@ -21,6 +22,8 @@ export type SpotTravelChecklist = {
   copyText: string
 }
 
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 export type SpotGuide = {
   source: {
     rawInput: string
@@ -31,12 +34,17 @@ export type SpotGuide = {
     city?: string
     summary: string
     bestTime?: string
+<<<<<<< HEAD
     bestSeason?: string
     tripTags: string[]
     budget?: SpotBudget
     audienceTags: string[]
   }
   dayRoute?: SpotDayRoute
+=======
+    audienceTags: string[]
+  }
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   highlights: Array<{
     title: string
     description: string
@@ -44,8 +52,11 @@ export type SpotGuide = {
   checkpoints: Array<{
     name: string
     description: string
+<<<<<<< HEAD
     highlight?: string
     duration?: string
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
     photoTip?: string
     stayHint?: string
   }>
@@ -62,6 +73,7 @@ export type SpotGuide = {
   extraInfo: {
     transportTags: string[]
     stayTags: string[]
+<<<<<<< HEAD
     transportGuide: string[]
     ticketPolicy: string[]
     stayGuide: string[]
@@ -70,6 +82,11 @@ export type SpotGuide = {
     tips: string[]
   }
   travelChecklist?: SpotTravelChecklist
+=======
+    durationHint?: string
+    tips: string[]
+  }
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   displayMode?: SpotGuideDisplayMode
   displayHints?: string[]
 }

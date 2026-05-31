@@ -104,6 +104,7 @@ describe("scenic spot copy", () => {
     expect(inputMarkup).not.toContain("骑行攻略文字")
   })
 
+<<<<<<< HEAD
   it("shows text-only hint for the first release", () => {
     const inputMarkup = renderToStaticMarkup(
       <InputPanel
@@ -120,6 +121,8 @@ describe("scenic spot copy", () => {
     )
   })
 
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   it("shows a demo video panel for internal testing", () => {
     const homeMarkup = renderToStaticMarkup(<Home />)
 

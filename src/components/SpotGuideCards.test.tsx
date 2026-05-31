@@ -16,7 +16,10 @@ describe("SpotGuideCards", () => {
             title: "待确认景点",
             city: "温州",
             summary: "当前仅提取到部分视频信息，可结合联网补充进一步确认。",
+<<<<<<< HEAD
             tripTags: [],
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
             audienceTags: [],
           },
           highlights: [],
@@ -26,10 +29,13 @@ describe("SpotGuideCards", () => {
           extraInfo: {
             transportTags: [],
             stayTags: [],
+<<<<<<< HEAD
             transportGuide: [],
             ticketPolicy: [],
             stayGuide: [],
             travelTips: [],
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
             tips: [],
           },
         }}
@@ -41,10 +47,14 @@ describe("SpotGuideCards", () => {
     expect(markup).toContain("暂未从视频中提取到必打卡点")
     expect(markup).toContain("暂未从视频中提取到小吃或文创信息")
     expect(markup).toContain("暂未从视频中提取到周边推荐")
+<<<<<<< HEAD
     expect(markup).toContain("暂未整理出交通指南")
     expect(markup).toContain("暂未整理出票务政策")
     expect(markup).toContain("暂未整理出住宿参考")
     expect(markup).toContain("暂未整理出出行贴士")
+=======
+    expect(markup).toContain("暂未从视频中提取到补充信息")
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   })
 
   it("shows inference guidance when the scenic spot name is inferred", () => {
@@ -57,7 +67,10 @@ describe("SpotGuideCards", () => {
             title: "雁荡山",
             city: "温州",
             summary: "山景壮阔",
+<<<<<<< HEAD
             tripTags: [],
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
             audienceTags: ["山岳"],
           },
           highlights: [],
@@ -67,10 +80,13 @@ describe("SpotGuideCards", () => {
           extraInfo: {
             transportTags: [],
             stayTags: [],
+<<<<<<< HEAD
             transportGuide: [],
             ticketPolicy: [],
             stayGuide: [],
             travelTips: [],
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
             tips: [],
           },
           displayMode: "inferred",
@@ -81,6 +97,7 @@ describe("SpotGuideCards", () => {
 
     expect(markup).toContain("该景区名称根据视频线索推断，建议进一步核验。")
   })
+<<<<<<< HEAD
 
   it("renders trip tags, budget, best season, route, grouped extra info and checklist entry points", () => {
     const markup = renderToStaticMarkup(
@@ -249,4 +266,6 @@ describe("SpotGuideCards", () => {
     expect(markup).not.toContain("可优先安排在景点周边顺路体验。")
     expect(markup).not.toContain("当前结果未提供更详细的周边说明。")
   })
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 })

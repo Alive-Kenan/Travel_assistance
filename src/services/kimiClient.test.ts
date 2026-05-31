@@ -293,6 +293,7 @@ describe("enrichSpotWithKimi", () => {
                     title: "雁荡山",
                     city: "温州",
                     summary: "山景壮阔",
+<<<<<<< HEAD
                     tripTags: ["一日游", "徒步"],
                     budget: {
                       label: "参考人均",
@@ -304,6 +305,10 @@ describe("enrichSpotWithKimi", () => {
                     title: "一日游览动线",
                     stops: ["游客中心", "灵峰", "灵岩"],
                   },
+=======
+                    audienceTags: ["山岳"],
+                  },
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
                   highlights: [],
                   checkpoints: [],
                   foodAndSouvenirs: [],
@@ -311,6 +316,7 @@ describe("enrichSpotWithKimi", () => {
                   extraInfo: {
                     transportTags: [],
                     stayTags: [],
+<<<<<<< HEAD
                     transportGuide: [],
                     ticketPolicy: [],
                     stayGuide: [],
@@ -323,6 +329,10 @@ describe("enrichSpotWithKimi", () => {
                     essentials: ["徒步鞋"],
                     copyText: "出行清单",
                   },
+=======
+                    tips: [],
+                  },
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
                 }),
               },
             },
@@ -410,12 +420,17 @@ describe("enrichSpotWithKimi", () => {
     expect(result.checkpoints).toEqual([
       {
         name: "灵岩",
+<<<<<<< HEAD
         description: "当前结果未提供更详细的打卡点描述。",
+=======
+        description: "灵岩值得作为游览动线中的停留点。",
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
       },
     ])
     expect(result.foodAndSouvenirs[0]).toEqual({
       name: "麦饼",
       category: "food",
+<<<<<<< HEAD
       reason: "可优先安排在景点周边顺路品尝。",
     })
     expect(result.extraInfo.transportTags).toEqual(["建议自驾"])
@@ -721,6 +736,11 @@ describe("enrichSpotWithKimi", () => {
       "炸年糕",
       "雁荡毛峰茶",
     ])
+=======
+      reason: "来自当前景点结果的补充信息。",
+    })
+    expect(result.extraInfo.transportTags).toEqual(["建议自驾"])
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   })
 
   test("infers a candidate spot name from weak stage1 clues", async () => {
@@ -775,7 +795,10 @@ describe("enrichSpotWithKimi", () => {
                   title: "雁荡山",
                   city: "温州",
                   summary: "山景壮阔",
+<<<<<<< HEAD
                   tripTags: [],
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
                   audienceTags: ["山岳"],
                 },
                 highlights: [],
@@ -785,10 +808,13 @@ describe("enrichSpotWithKimi", () => {
                 extraInfo: {
                   transportTags: [],
                   stayTags: [],
+<<<<<<< HEAD
                   transportGuide: [],
                   ticketPolicy: [],
                   stayGuide: [],
                   travelTips: [],
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
                   tips: [],
                 },
               }),
@@ -822,6 +848,7 @@ describe("enrichSpotWithKimi", () => {
     expect(result.displayMode).toBe("inferred")
     expect(result.displayHints).toContain("该景区名称根据视频线索推断，建议进一步核验。")
   })
+<<<<<<< HEAD
 
   test("parses fenced json payloads returned after builtin web search", async () => {
     vi.stubGlobal("window", { __KIMI_API_KEY__: "window-key" })
@@ -904,4 +931,6 @@ describe("enrichSpotWithKimi", () => {
     expect(result.highlights[0]?.title).toBe("灵峰夜景")
     expect(result.extraInfo.transportGuide).toEqual(["高铁到雁荡山站后可转景区接驳。"])
   })
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 })

@@ -1,7 +1,11 @@
 import stage1Template from "@/prompts/kimi-video-analysis.template.json"
 import spotInferenceTemplate from "@/prompts/kimi-spot-inference.template.json"
 import stage2Template from "@/prompts/kimi-spot-enrichment.template.json"
+<<<<<<< HEAD
 import type { SpotGuide, Stage1SpotExtraction } from "@/types/spotGuide"
+=======
+import type { Stage1SpotExtraction } from "@/types/spotGuide"
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 
 type UserContentPart =
   | { type: "text"; text: string }
@@ -16,6 +20,7 @@ type ThinkingConfig = {
   type: "disabled"
 }
 
+<<<<<<< HEAD
 type SpotEnrichmentPromptOptions = {
   focusSections?: string[]
   referenceGuide?: SpotGuide
@@ -30,6 +35,8 @@ const focusSectionLabels: Record<string, string> = {
   stayGuide: "住宿参考",
 }
 
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 function replacePlaceholder(
   template: string,
   placeholder: string,
@@ -38,6 +45,7 @@ function replacePlaceholder(
   return template.replace(placeholder, value)
 }
 
+<<<<<<< HEAD
 function buildFocusInstruction(focusSections?: string[]): string {
   if (!focusSections || focusSections.length === 0) {
     return ""
@@ -70,6 +78,8 @@ function buildReferenceGuideInstruction(referenceGuide?: SpotGuide): string {
   ].join("\n")
 }
 
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 export async function buildVideoAnalysisRequest(frameDataUrls: string[]) {
   return {
     model: stage1Template.model,
@@ -97,6 +107,7 @@ export async function buildVideoAnalysisRequest(frameDataUrls: string[]) {
   }
 }
 
+<<<<<<< HEAD
 export async function buildSpotEnrichmentRequest(
   stage1: Stage1SpotExtraction,
   options?: SpotEnrichmentPromptOptions,
@@ -104,6 +115,9 @@ export async function buildSpotEnrichmentRequest(
   const focusInstruction = buildFocusInstruction(options?.focusSections)
   const referenceGuideInstruction = buildReferenceGuideInstruction(options?.referenceGuide)
 
+=======
+export async function buildSpotEnrichmentRequest(stage1: Stage1SpotExtraction) {
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   return {
     model: stage2Template.model,
     thinking: { type: "disabled" } satisfies ThinkingConfig,
@@ -120,7 +134,11 @@ export async function buildSpotEnrichmentRequest(
           stage2Template.user_prompt_template,
           "{{STAGE1_JSON}}",
           JSON.stringify(stage1),
+<<<<<<< HEAD
           ) + focusInstruction + referenceGuideInstruction,
+=======
+        ),
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
       } satisfies ChatMessage,
     ],
   }

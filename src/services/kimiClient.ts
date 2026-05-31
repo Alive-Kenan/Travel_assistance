@@ -113,10 +113,15 @@ type SpotGuideLike = Partial<SpotGuide> & {
   coreSpotName?: string
   city?: string
   summary?: string
+<<<<<<< HEAD
   dayRoute?: SpotGuide["dayRoute"]
   travelChecklist?: SpotGuide["travelChecklist"]
   highlights?: Array<string | { title?: string; description?: string }>
   checkpoints?: Array<string | { name?: string; description?: string; highlight?: string; duration?: string; photoTip?: string; stayHint?: string }>
+=======
+  highlights?: Array<string | { title?: string; description?: string }>
+  checkpoints?: Array<string | { name?: string; description?: string; photoTip?: string; stayHint?: string }>
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   foods?: string[]
   souvenirs?: string[]
   nearbyCandidates?: Array<string | { name?: string; reason?: string; relationHint?: string }>
@@ -130,12 +135,15 @@ type SpotCandidate = {
   rationale: string
 }
 
+<<<<<<< HEAD
 const MAX_SECTION_ITEMS = 5
 const MAX_DERIVED_EXTRA_INFO_ITEMS = 3
 const TRANSPORT_KEYWORDS = ["高铁", "火车", "动车", "自驾", "接驳", "大巴", "公交", "巴士", "换乘", "停车", "索道", "步行", "车票"]
 const TICKET_KEYWORDS = ["门票", "售票", "购票", "联票", "预约", "免票", "优惠", "入园", "车票", "有效", "开放"]
 const STAY_KEYWORDS = ["住宿", "民宿", "酒店", "客栈", "住在", "入住", "营地"]
 
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 async function completeBuiltinToolCalls(
   initialBody: Awaited<ReturnType<typeof buildSpotEnrichmentRequest>>,
 ): Promise<ChatCompletionResponse> {
@@ -191,6 +199,7 @@ function parseMessageContentAsJson<T>(response: ChatCompletionResponse): T {
     throw new Error("KIMI_EMPTY_RESPONSE")
   }
 
+<<<<<<< HEAD
   const normalized = content.trim()
   const fencedMatch = normalized.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/i)
   const jsonText = fencedMatch?.[1]?.trim() || normalized
@@ -296,6 +305,9 @@ function deriveExtraInfoSections(extraInfo: NonNullable<SpotGuideLike["extraInfo
     durationHint: extraInfo.durationHint,
     tips,
   }
+=======
+  return JSON.parse(content) as T
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 }
 
 function normalizeSpotGuide(payload: SpotGuideLike): SpotGuide {
@@ -314,6 +326,7 @@ function normalizeSpotGuide(payload: SpotGuideLike): SpotGuide {
     : Array.isArray(payload.nearbyCandidates)
       ? payload.nearbyCandidates
       : []
+<<<<<<< HEAD
   const budget =
     payload.coreSpot?.budget?.label && payload.coreSpot?.budget?.range
       ? {
@@ -339,6 +352,13 @@ function normalizeSpotGuide(payload: SpotGuideLike): SpotGuide {
     foods: payload.foods ?? [],
     essentials: ["舒适好走的鞋", "手机与充电宝"],
   }
+=======
+  const extraInfo = payload.extraInfo ?? {
+    transportTags: payload.transportHints ?? [],
+    stayTags: payload.stayHints ?? [],
+    tips: payload.tips ?? [],
+  }
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 
   return {
     source: {
@@ -350,11 +370,16 @@ function normalizeSpotGuide(payload: SpotGuideLike): SpotGuide {
       city,
       summary,
       bestTime: payload.coreSpot?.bestTime,
+<<<<<<< HEAD
       bestSeason: payload.coreSpot?.bestSeason,
       tripTags: normalizeStringList(payload.coreSpot?.tripTags),
       budget,
       audienceTags: Array.isArray(payload.coreSpot?.audienceTags)
         ? normalizeStringList(payload.coreSpot.audienceTags)
+=======
+      audienceTags: Array.isArray(payload.coreSpot?.audienceTags)
+        ? payload.coreSpot.audienceTags
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
         : highlightItems
             .map((item) => (typeof item === "string" ? item : item?.title || ""))
             .filter(Boolean)
@@ -378,17 +403,25 @@ function normalizeSpotGuide(payload: SpotGuideLike): SpotGuide {
         typeof item === "string"
           ? {
               name: item,
+<<<<<<< HEAD
               description: "当前结果未提供更详细的打卡点描述。",
+=======
+              description: `${item}值得作为游览动线中的停留点。`,
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
             }
           : {
               name: item?.name?.trim() || "推荐停留点",
               description: item?.description?.trim() || "当前结果未提供更详细的打卡点描述。",
+<<<<<<< HEAD
               highlight: item?.highlight?.trim(),
               duration: item?.duration?.trim(),
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
               photoTip: item?.photoTip,
               stayHint: item?.stayHint,
             },
       )
+<<<<<<< HEAD
       .filter((item) => item.name)
       .slice(0, MAX_SECTION_ITEMS),
     foodAndSouvenirs:
@@ -400,18 +433,38 @@ function normalizeSpotGuide(payload: SpotGuideLike): SpotGuide {
               reason: normalizeTextValue(item.reason) || "可优先安排在景点周边顺路体验。",
             }))
             .slice(0, MAX_SECTION_ITEMS)
+=======
+      .filter((item) => item.name),
+    foodAndSouvenirs:
+      foodItems.length > 0
+        ? foodItems.map((item) => ({
+            name: item.name,
+            category: item.category,
+            reason: item.reason,
+          }))
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
         : [
             ...(payload.foods ?? []).map((name) => ({
               name,
               category: "food" as const,
+<<<<<<< HEAD
               reason: "可优先安排在景点周边顺路品尝。",
+=======
+              reason: "来自当前景点结果的补充信息。",
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
             })),
             ...(payload.souvenirs ?? []).map((name) => ({
               name,
               category: "souvenir" as const,
+<<<<<<< HEAD
               reason: "适合作为带有当地特色的轻量伴手礼。",
             })),
           ].slice(0, MAX_SECTION_ITEMS),
+=======
+              reason: "来自当前景点结果的补充信息。",
+            })),
+          ],
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
     nearbyRecommendations: nearbyItems
       .map((item) =>
         typeof item === "string"
@@ -426,6 +479,7 @@ function normalizeSpotGuide(payload: SpotGuideLike): SpotGuide {
             },
       )
       .filter((item) => item.name),
+<<<<<<< HEAD
     dayRoute:
       payload.dayRoute?.title && Array.isArray(payload.dayRoute.stops)
         ? {
@@ -469,6 +523,14 @@ function normalizeSpotGuide(payload: SpotGuideLike): SpotGuide {
             `必备物品：${fallbackChecklist.essentials.join("、") || "待补充"}`,
           ].join("\n"),
         },
+=======
+    extraInfo: {
+      transportTags: Array.isArray(extraInfo.transportTags) ? extraInfo.transportTags : [],
+      stayTags: Array.isArray(extraInfo.stayTags) ? extraInfo.stayTags : [],
+      durationHint: extraInfo.durationHint,
+      tips: Array.isArray(extraInfo.tips) ? extraInfo.tips : [],
+    },
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   }
 }
 
@@ -503,6 +565,7 @@ export async function inferSpotCandidateWithKimi(
 
 export async function enrichSpotWithKimi(
   stage1: Stage1SpotExtraction,
+<<<<<<< HEAD
   options?: Pick<SpotGuide, "displayMode" | "displayHints"> & {
     focusSections?: string[]
     referenceGuide?: SpotGuide
@@ -512,6 +575,11 @@ export async function enrichSpotWithKimi(
     focusSections: options?.focusSections,
     referenceGuide: options?.referenceGuide,
   })
+=======
+  options?: Pick<SpotGuide, "displayMode" | "displayHints">,
+): Promise<SpotGuide> {
+  const body = await buildSpotEnrichmentRequest(stage1)
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   const response = await completeBuiltinToolCalls(body)
 
   return applyDisplayMetadata(

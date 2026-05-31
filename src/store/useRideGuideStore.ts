@@ -4,6 +4,7 @@ import {
   inferSpotCandidateWithKimi,
 } from "@/services/kimiClient"
 import { analyzeVideoViaBackend } from "@/services/backendVideoAnalyzeClient"
+<<<<<<< HEAD
 import { analyzeTextGuide } from "@/services/textGuideAnalyzer"
 import type { SpotGuide, SpotGuideStatus } from "@/types/spotGuide"
 import { EXAMPLE_INPUT } from "@/utils/mockParserAdapter"
@@ -12,6 +13,11 @@ import {
   hasSparseTravelSections,
   isSpotGuideContentSufficient,
 } from "@/utils/spotGuideCompleteness"
+=======
+import type { SpotGuide, SpotGuideStatus } from "@/types/spotGuide"
+import { EXAMPLE_INPUT, mockParserAdapter } from "@/utils/mockParserAdapter"
+import { isSpotGuideContentSufficient } from "@/utils/spotGuideCompleteness"
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 import { mapStage1ToSpotGuide } from "@/utils/spotGuideMapper"
 import { validateVideoFile } from "@/utils/videoFile"
 
@@ -47,6 +53,7 @@ type RideGuideState = {
 let controller: AbortController | null = null
 let videoAnalyzeTimer: ReturnType<typeof setTimeout> | null = null
 const INFERRED_DISPLAY_HINT = "该景区名称根据视频线索推断，建议进一步核验。"
+<<<<<<< HEAD
 const MAX_FOCUSED_ENRICHMENT_RETRIES = 2
 
 function mergeSpotGuide(baseGuide: SpotGuide, incomingGuide: SpotGuide): SpotGuide {
@@ -125,6 +132,8 @@ function mergeSpotGuide(baseGuide: SpotGuide, incomingGuide: SpotGuide): SpotGui
         : baseGuide.displayHints,
   }
 }
+=======
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
 
 function clearVideoAnalyzeTimer() {
   if (videoAnalyzeTimer) {
@@ -209,6 +218,7 @@ export const useRideGuideStore = create<RideGuideState>((set, get) => ({
 
       try {
         set({ status: "enriching_spot" })
+<<<<<<< HEAD
         let directGuide = await enrichSpotWithKimi(stage1)
 
         if (isSpotGuideContentSufficient(directGuide)) {
@@ -227,6 +237,11 @@ export const useRideGuideStore = create<RideGuideState>((set, get) => ({
             focusedRetryCount += 1
           }
 
+=======
+        const directGuide = await enrichSpotWithKimi(stage1)
+
+        if (isSpotGuideContentSufficient(directGuide)) {
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
           clearVideoAnalyzeTimer()
           set({
             status: "success",
@@ -287,6 +302,7 @@ export const useRideGuideStore = create<RideGuideState>((set, get) => ({
 
     set({ status: "loading", error: null, partialMessage: null })
     const { inputText } = get()
+<<<<<<< HEAD
 
     try {
       const result = await analyzeTextGuide(inputText)
@@ -309,5 +325,20 @@ export const useRideGuideStore = create<RideGuideState>((set, get) => ({
         },
       })
     }
+=======
+    const res = await mockParserAdapter.parse({ text: inputText }, controller.signal)
+
+    if (controller.signal.aborted) return
+
+    if (res.ok === false) {
+      set({
+        status: res.errorCode === "ABORTED" ? "idle" : "error",
+        error: { code: res.errorCode, message: res.message },
+      })
+      return
+    }
+
+    set({ status: "success", result: res.data })
+>>>>>>> 6cb67d6e03fddfe356732e24b0d2a8ee92c2215e
   },
 }))
